@@ -2,12 +2,12 @@ import { Activity, CmsPage, FormDefinition, JourneyItem, NavigationItem, Post, P
 
 export const DEFAULT_SITE: SiteConfig = {
   siteName: 'Bui Loc', fullName: 'Bùi Tấn Lộc', domain: 'builoc.name.vn', logoText: 'Bui Loc',
-  tagline: 'Giáo dục, cộng đồng, công nghệ và những dự án được làm đến nơi đến chốn.',
+  tagline: 'Không gian cá nhân để lưu lại dự án, bài viết, hoạt động và những điều mình đang học.',
   intro: 'Bui Loc là không gian cá nhân để ghi lại công việc, dự án, bài viết và những thử nghiệm số mình thực sự tham gia. Website ưu tiên thông tin có ích, cách làm rõ ràng và những dấu mốc đáng lưu lại; phần đời tư không cần thiết được giữ ngoài phạm vi công khai.',
-  email: 'support@skyfirst.io.vn', homepageBadge: 'Personal website · Bui Loc', nowTitle: 'Đang tập trung',
+  email: '', homepageBadge: 'Personal website · Bui Loc', nowTitle: 'Đang tập trung',
   nowText: 'Hoàn thiện Sky First Network, phát triển các lớp học và sản phẩm giáo dục, xây hệ thống số phục vụ vận hành, đồng thời ghi chép lại những điều có thể dùng lâu dài thay vì chỉ xuất hiện trong một bài đăng ngắn.',
-  socialLinks: [{label:'Facebook · Sky First',url:'https://www.facebook.com/skyfirstnetwork/'},{label:'Sky First Network',url:'https://skyfirst.io.vn'}],
-  footerText: '© 2026 Bui Loc. Nội dung được chọn lọc và cập nhật theo từng giai đoạn.',
+  socialLinks: [],
+  footerText: '© 2026 Bui Loc. All rights reserved.',
   contactTitle: 'Kết nối với Bui Loc', contactText: 'Nếu bạn muốn trao đổi về giáo dục, hoạt động cộng đồng, truyền thông, website hoặc một ý tưởng cần được cấu trúc rõ ràng hơn, hãy gửi lời nhắn qua biểu mẫu bên dưới.', siteStatus:'active'
 };
 

@@ -18,7 +18,7 @@ export const CmsProvider:React.FC<{children:React.ReactNode}>=({children})=>{
   const [s,t,p,po,pr,a,j,n,f,r,b]=await Promise.all([
    getCollection<SiteConfig>('site_config'),getCollection<ThemeConfig>('theme_config'),getCollection<CmsPage>('pages'),getCollection<Post>('posts'),getCollection<Project>('projects'),getCollection<Activity>('activities'),getCollection<JourneyItem>('journey'),getCollection<NavigationItem>('navigation'),getCollection<FormDefinition>('forms'),getCollection<RedirectRule>('redirects'),getCollection<ReusableBlock>('reusable_blocks')
   ]);
-  if(s[0])setSite({...DEFAULT_SITE,...s[0]}); if(t[0])setTheme({...DEFAULT_THEME,...t[0]});
+  if(s[0]){const loaded:any={...DEFAULT_SITE,...s[0]};loaded.siteName='Bui Loc';loaded.logoText='Bui Loc';loaded.socialLinks=(loaded.socialLinks||[]).filter((x:any)=>x?.url&&!/(skyfirst\.io\.vn|facebook\.com\/skyfirstnetwork)/i.test(x.url));if(/@skyfirst\.io\.vn$/i.test(loaded.email||''))loaded.email='';if(!loaded.footerText||/Nội dung được chọn lọc/i.test(loaded.footerText))loaded.footerText='© 2026 Bui Loc. All rights reserved.';setSite(loaded)} if(t[0])setTheme({...DEFAULT_THEME,...t[0]});
   if(p.length)setPages(p); if(po.length)setPosts(po); if(pr.length)setProjects(pr); if(a.length)setActivities(a); if(j.length)setJourney(j); if(n.length)setNavigation(n); if(f.length)setForms(f); if(r.length)setRedirects(r); if(b.length)setReusableBlocks(b);
  }finally{setLoading(false)}};
  useEffect(()=>{void refresh()},[]);
