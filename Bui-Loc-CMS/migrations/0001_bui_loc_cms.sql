@@ -27,7 +27,9 @@ CREATE TABLE IF NOT EXISTS website_admin_users (
   password_hash TEXT NOT NULL,
   password_iterations INTEGER NOT NULL DEFAULT 180000,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  last_login TEXT
+  last_login TEXT,
+  must_change_password INTEGER NOT NULL DEFAULT 0,
+  password_changed_at TEXT
 );
 CREATE TABLE IF NOT EXISTS website_admin_sessions (
   token_hash TEXT PRIMARY KEY,

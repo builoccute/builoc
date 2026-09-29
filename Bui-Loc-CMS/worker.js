@@ -57,7 +57,8 @@ export default {
         const rest = path.slice('/media/'.length).split('/').filter(Boolean);
         return await invoke(mediaFile, request, env, executionCtx, { path: rest });
       }
-      const mod = routes.get(path);
+      const normalized=path.startsWith('/api/v1/')?'/api/'+path.slice('/api/v1/'.length):path;
+      const mod = routes.get(normalized);
       if (mod) return await invoke(mod, request, env, executionCtx);
       return secure(await env.ASSETS.fetch(request));
     } catch (error) {

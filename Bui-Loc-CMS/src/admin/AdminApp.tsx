@@ -2,7 +2,7 @@ import React,{useEffect,useMemo,useRef,useState}from'react';
 import{Activity,AdminUser,CmsPage,ContentBlock,FormDefinition,JourneyItem,NavigationItem,Post,Project,RedirectRule}from'../types';
 import{useCms}from'../context/CmsContext';
 import{api}from'../api';
-import{AdminLogin}from'./AdminLogin';
+import{AdminLogin,ForcePasswordChange}from'./AdminLogin';
 import{slugify,uid}from'../utils';
 import{
  Activity as ActivityIcon,Archive,ArrowDown,ArrowUp,BarChart3,Blocks,BookOpen,ChevronLeft,ChevronRight,
@@ -24,7 +24,7 @@ const nav:{id:Tab,label:string,icon:any,group?:string}[]=[
 function nowIso(){return new Date().toISOString()}
 function blankDoc(kind:'page'|'post'|'project'|'activity'):any{const id=uid(kind);const base={id,slug:'',title:'',summary:'',status:'draft',isPublished:false,createdAt:nowIso(),updatedAt:nowIso(),seoTitle:'',seoDescription:'',ogImage:'',canonicalUrl:'',noIndex:false};if(kind==='page')return{...base,kind,template:'default',showInSitemap:true,blocks:[{id:uid('block'),type:'hero',title:'Trang mới',subtitle:'Bui Loc',body:'Nội dung mở đầu.',background:'default',width:'wide'}]};if(kind==='post')return{...base,kind,category:'Ghi chép',author:'Bui Loc',content:'<p>Nội dung bài viết.</p>',blocks:[]};if(kind==='project')return{...base,kind,projectStatus:'active',role:'',period:'',websiteUrl:'',logoUrl:'',content:'<p>Giới thiệu dự án.</p>',highlights:[],blocks:[]};return{...base,kind,date:'',location:'',category:'',content:'<p>Nội dung hoạt động.</p>',gallery:[]}}
 
-export function AdminApp(){const[user,setUser]=useState<any>(null);if(!user)return <AdminLogin onReady={setUser}/>;return <AdminShell user={user} onLogout={()=>setUser(null)}/>}
+export function AdminApp(){const[user,setUser]=useState<any>(null);if(!user)return <AdminLogin onReady={setUser}/>;if(user.mustChangePassword)return <ForcePasswordChange user={user} onReady={setUser}/>;return <AdminShell user={user} onLogout={()=>setUser(null)}/>}
 
 function AdminShell({user,onLogout}:{user:any,onLogout:()=>void}){const cms=useCms();const[tab,setTab]=useState<Tab>(()=>(sessionStorage.getItem('bl-admin-tab') as Tab)||'dashboard');const[collapsed,setCollapsed]=useState(false);const[query,setQuery]=useState('');const[palette,setPalette]=useState(false);const[toast,setToast]=useState('');
  useEffect(()=>sessionStorage.setItem('bl-admin-tab',tab),[tab]);useEffect(()=>{const fn=(e:KeyboardEvent)=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();setPalette(v=>!v)}if(e.key==='Escape')setPalette(false)};addEventListener('keydown',fn);return()=>removeEventListener('keydown',fn)},[]);

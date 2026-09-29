@@ -47,10 +47,21 @@ export const DEFAULT_NAV: NavigationItem[] = [
   { id: 'activities', label: 'Hoạt động', url: '/hoat-dong', visible: true },
   { id: 'journey', label: 'Hành trình', url: '/hanh-trinh', visible: true },
   { id: 'posts', label: 'Bài viết', url: '/bai-viet', visible: true },
+  { id: 'services', label: 'Dịch vụ', url: '/dich-vu', visible: true },
   { id: 'contact', label: 'Liên hệ', url: '/lien-he', visible: true }
 ];
 
 export const DEFAULT_PAGES: CmsPage[] = [
+
+  {
+    id: 'page-services', slug: 'dich-vu', title: 'Dịch vụ cá nhân', kind: 'page', status: 'published', isPublished: true,
+    summary: 'Một số nhóm công việc cá nhân có thể trao đổi. Toàn bộ nội dung chỉ là dữ liệu demo và có thể chỉnh trong BUILOC CMS.', template: 'editorial', showInSitemap: true,
+    blocks: [
+      { id: 'services-hero', type: 'hero', title: 'Dịch vụ cá nhân', subtitle: 'Thiết kế · Truyền thông · Website · Nội dung', body: 'Trang demo để giới thiệu các nhóm công việc cá nhân. Nội dung, phạm vi và cách liên hệ có thể chỉnh hoàn toàn trong CMS.', background: 'soft' },
+      { id: 'services-intro', type: 'richtext', title: 'Có thể trao đổi', body: '<p><strong>Thiết kế truyền thông:</strong> poster, banner, social post và bộ ấn phẩm cơ bản.</p><p><strong>Website & hệ thống số:</strong> landing page, website giới thiệu, biểu mẫu và luồng nội dung.</p><p><strong>Nội dung:</strong> biên tập bài đăng, tài liệu, slide và cấu trúc thông tin.</p><p><em>Đây là nội dung mẫu. Hãy chỉnh lại phạm vi phù hợp trước khi công khai nhận dịch vụ.</em></p>', width: 'narrow' },
+      { id: 'services-cta', type: 'buttons', title: 'Trao đổi nhu cầu', buttons: [{ label: 'Liên hệ', url: '/lien-he', style: 'primary' }] }
+    ]
+  },
   {
     id: 'page-about', slug: 'gioi-thieu', title: 'Giới thiệu', kind: 'page', status: 'published', isPublished: true,
     summary: 'Một phần giới thiệu vừa đủ về Bui Loc, tập trung vào công việc và những điều đang xây dựng.',

@@ -1,18 +1,6 @@
 {
-  "application": "Sky First Network Website",
-  "track": "WED",
-  "phase": "2",
-  "dataPolicy": "cloud-authoritative",
-  "cachePolicy": "html-no-cache-assets-immutable",
-  "browserBaseline": [
-    "Chrome",
-    "Edge",
-    "Firefox",
-    "Safari",
-    "Android WebView",
-    "iOS Safari"
-  ],
-  "version": "2.1.0",
-  "channel": "workers",
-  "notes": "Accounts/API + redesigned admin authentication and CMS UI"
+  "product": "BUILOC CMS",
+  "channel": "production",
+  "updated": "2026-09-29",
+  "notes": ["Workers + D1 + R2", "Forced first-login password change", "API v1 aliases", "Editable personal services demo"]
 }

@@ -1,2 +1,2 @@
 import{json,requireAdmin}from'../../_auth.js';
-export async function onRequestGet(context){const denied=await requireAdmin(context);if(denied)return denied;const u=context.data.adminUser;return json({ok:true,user:{id:u.id,email:u.email,name:u.name,role:u.role,status:u.status,createdAt:u.created_at,lastLogin:u.last_login}})}
+export async function onRequestGet(context){const denied=await requireAdmin(context,['owner','admin','editor','author'],{allowPasswordChange:true});if(denied)return denied;const u=context.data.adminUser;return json({ok:true,user:{id:u.id,email:u.email,name:u.name,role:u.role,status:u.status,createdAt:u.created_at,lastLogin:u.last_login,mustChangePassword:Number(u.must_change_password||0)===1,passwordChangedAt:u.password_changed_at}})}
