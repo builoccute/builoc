@@ -1,0 +1,3 @@
+import React from 'react';
+import {useCms} from '../context/CmsContext';
+export const Journey:React.FC=()=>{const{journey}=useCms();const items=journey.filter(x=>x.isPublished!==false).sort((a,b)=>(a.sortOrder||0)-(b.sortOrder||0));return <main><section className="page-hero"><div className="shell narrow"><div className="eyebrow">Selected milestones</div><h1>Hành trình</h1><p>Không phải toàn bộ đời sống cá nhân — chỉ là những dấu mốc được chủ động chọn để lưu lại công khai.</p></div></section><section className="shell narrow content-pad"><div className="timeline large">{items.length?items.map(x=><article key={x.id}><span>{x.dateLabel}</span><h2>{x.title}</h2><p>{x.description}</p></article>):<div className="empty">Chưa có dấu mốc công khai.</div>}</div></section></main>}
