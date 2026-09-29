@@ -1,6 +1,0 @@
-{
-  "product": "BUILOC CMS",
-  "channel": "production",
-  "updated": "2026-09-29",
-  "notes": ["Workers + D1 + R2", "Forced first-login password change", "API v1 aliases", "Editable personal services demo"]
-}
