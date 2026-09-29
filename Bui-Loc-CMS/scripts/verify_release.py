@@ -1,75 +1,27 @@
 from pathlib import Path
-import json, re, sqlite3, sys
-
-ROOT = Path(__file__).resolve().parents[1]
-errors = []
-
-def require(path):
-    if not (ROOT / path).exists():
-        errors.append(f'Missing: {path}')
-
-for path in [
-    'functions/api/media/upload.js',
-    'functions/api/media/index.js',
-    'functions/media/[[path]].js',
-    'functions/api/comments/index.js',
-    'functions/api/contact/index.js',
-    'functions/api/registrations/index.js',
-    'migrations/0010_website_media_comments_contacts.sql',
-    'src/components/NewsComments.tsx',
-    'src/components/admin/AdminRemoteDataManager.tsx',
-    'src/data/officialContent2026.ts',
-    'public/brand/sky-first-network-web.png',
-    'public/brand/the-sky-first-english-club-web.png',
-    'public/brand/nha-han-ngu-web.jpg',
-]: require(path)
-
+import json,re,sqlite3,subprocess,sys,zipfile
+ROOT=Path(__file__).resolve().parents[1]; errors=[]
+for p in ['dist/index.html','dist/app.js','dist/app.css','dist/favicon.svg','functions/api/cms.js','functions/api/admin-auth/bootstrap.js','functions/api/media/upload.js','functions/media/[[path]].js','migrations/0001_bui_loc_cms.sql','wrangler.jsonc']:
+    if not (ROOT/p).exists(): errors.append('Missing '+p)
+try: json.loads((ROOT/'package.json').read_text())
+except Exception as e: errors.append('package.json '+str(e))
 try:
-    json.loads((ROOT / 'package.json').read_text(encoding='utf-8'))
-except Exception as exc:
-    errors.append(f'package.json invalid: {exc}')
-
+    t=(ROOT/'wrangler.jsonc').read_text(); t=re.sub(r'//.*','',t); w=json.loads(t)
+    if w['d1_databases'][0]['database_id']!='d562635e-156d-4850-9eed-c88942633193': errors.append('Wrong D1 ID')
+    if w['r2_buckets'][0]['bucket_name']!='canhan': errors.append('Wrong R2 bucket')
+except Exception as e: errors.append('wrangler '+str(e))
 try:
-    wrangler = (ROOT / 'wrangler.jsonc').read_text(encoding='utf-8')
-    wrangler = re.sub(r'//.*', '', wrangler)
-    json.loads(wrangler)
-except Exception as exc:
-    errors.append(f'wrangler.jsonc invalid: {exc}')
-
-try:
-    sql = (ROOT / 'migrations/0010_website_media_comments_contacts.sql').read_text(encoding='utf-8')
-    executable = '\n'.join(line for line in sql.splitlines() if not line.lstrip().startswith('--'))
-    if re.search(r'\b(DROP|TRUNCATE|DELETE\s+FROM)\b', executable, re.I):
-        errors.append('Migration contains destructive SQL')
-    db = sqlite3.connect(':memory:')
-    db.executescript(sql)
-    tables = {r[0] for r in db.execute("select name from sqlite_master where type='table'")}
-    for table in ('website_comments', 'website_contacts', 'website_registrations'):
-        if table not in tables: errors.append(f'Migration does not create {table}')
-except Exception as exc:
-    errors.append(f'Migration invalid: {exc}')
-
-src = '\n'.join(
-    p.read_text(encoding='utf-8', errors='ignore')
-    for p in (ROOT / 'src').rglob('*')
-    if p.suffix in {'.ts', '.tsx'}
-)
-for bad in ('images.unsplash.com', '/favicon.png'):
-    if bad in src: errors.append(f'Unexpected placeholder/broken asset reference: {bad}')
-
-ctx = (ROOT / 'src/context/DataContext.tsx').read_text(encoding='utf-8')
-official = (ROOT / 'src/data/officialContent2026.ts').read_text(encoding='utf-8')
-slugs = set(re.findall(r"slug\s*:\s*['\"]([^'\"]+)['\"]", ctx + official))
-nav = set(re.findall(r"page:'custom-page',slug:'([^']+)'", ctx))
-footer = set(re.findall(r"url:'/([^']+)'", ctx)) - {'about','contact','certificate','sponsor','join','units','news','admin','home','programs'}
-for slug in sorted((nav | footer) - slugs): errors.append(f'Broken configured page slug: {slug}')
-
+    db=sqlite3.connect(':memory:'); db.executescript((ROOT/'migrations/0001_bui_loc_cms.sql').read_text())
+except Exception as e: errors.append('migration '+str(e))
+r=subprocess.run(['node','--check',str(ROOT/'dist/app.js')],capture_output=True,text=True)
+if r.returncode: errors.append('app.js syntax '+r.stderr)
+html=(ROOT/'dist/index.html').read_text()
+if '/src/main.tsx' in html: errors.append('dist still points to TSX source')
+if '/app.js' not in html: errors.append('dist app.js not linked')
 if errors:
-    print('RELEASE CHECK FAILED')
-    for err in errors: print('-', err)
-    sys.exit(1)
-
+ print('RELEASE CHECK FAILED'); [print('-',e) for e in errors]; sys.exit(1)
 print('RELEASE CHECK PASSED')
-print(f'Configured page slugs checked: {len(nav | footer)}')
-print('Additive D1 migration checked: OK')
-print('Critical media/comments/contact/registration files: OK')
+print('Deploy-ready dist: OK')
+print('D1 binding: OK')
+print('R2 binding: OK')
+print('Admin/API files: OK')
