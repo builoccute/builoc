@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS website_admin_users (
   status TEXT NOT NULL DEFAULT 'active',
   password_salt TEXT NOT NULL,
   password_hash TEXT NOT NULL,
-  password_iterations INTEGER NOT NULL DEFAULT 180000,
+  password_iterations INTEGER NOT NULL DEFAULT 100000,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
   last_login TEXT,
   must_change_password INTEGER NOT NULL DEFAULT 0,
