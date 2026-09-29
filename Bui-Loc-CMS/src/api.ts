@@ -1,0 +1,8 @@
+export class ApiError extends Error{status:number;code?:string;details?:any;constructor(message:string,status=0,code?:string,details?:any){super(message);this.name='ApiError';this.status=status;this.code=code;this.details=details}}
+export async function api<T=any>(url:string,init:RequestInit={}):Promise<T>{
+ const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),12000);
+ try{const response=await fetch(url,{...init,credentials:'include',cache:'no-store',signal:init.signal||controller.signal,headers:{accept:'application/json',...(init.headers||{})}});const type=response.headers.get('content-type')||'';const data:any=type.includes('application/json')?await response.json().catch(()=>({})):{};if(!response.ok||data?.ok===false)throw new ApiError(data?.error||`API HTTP ${response.status}`,response.status,data?.code,data);return data as T}catch(e:any){if(e?.name==='AbortError')throw new ApiError('API phản hồi quá lâu. Vui lòng thử lại.',408,'TIMEOUT');throw e}finally{clearTimeout(timer)}
+}
+export async function getCollection<T>(collection:string):Promise<T[]>{try{const d=await api<{items:T[]}>(`/api/cms?collection=${encodeURIComponent(collection)}`);return Array.isArray(d.items)?d.items:[]}catch{return[]}}
+export async function putDocument(collection:string,id:string,data:any){return api('/api/cms',{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify({collection,id,data})})}
+export async function deleteDocument(collection:string,id:string){return api(`/api/cms?collection=${encodeURIComponent(collection)}&id=${encodeURIComponent(id)}`,{method:'DELETE'})}

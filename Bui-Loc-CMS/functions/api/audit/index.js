@@ -1,0 +1,2 @@
+import{json,requireAdmin}from'../../_auth.js';
+export async function onRequestGet(context){const denied=await requireAdmin(context,['owner','admin']);if(denied)return denied;try{const rows=await context.env.DB.prepare('SELECT a.id,a.actor_id,a.target_id,a.action,a.detail,a.created_at,u.name actor_name,u.email actor_email FROM website_admin_audit a LEFT JOIN website_admin_users u ON u.id=a.actor_id ORDER BY a.id DESC LIMIT 300').all();return json({ok:true,items:rows.results||[]})}catch{return json({ok:true,items:[]})}}
