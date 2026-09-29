@@ -3,7 +3,7 @@ const enc=new TextEncoder();
 const b64u=(bytes)=>btoa(String.fromCharCode(...bytes)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 const hex=(buf)=>Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 export async function sha256(v){return hex(await crypto.subtle.digest('SHA-256',enc.encode(v)))}
-export async function hashPassword(password,salt,iterations=180000){const key=await crypto.subtle.importKey('raw',enc.encode(password),'PBKDF2',false,['deriveBits']);const bits=await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:enc.encode(salt),iterations},key,256);return hex(bits)}
+export async function hashPassword(password,salt,iterations=100000){const key=await crypto.subtle.importKey('raw',enc.encode(password),'PBKDF2',false,['deriveBits']);const bits=await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:enc.encode(salt),iterations},key,256);return hex(bits)}
 export function randomToken(bytes=32){const a=new Uint8Array(bytes);crypto.getRandomValues(a);return b64u(a)}
 export function parseCookies(req){const out={};for(const part of (req.headers.get('cookie')||'').split(';')){const i=part.indexOf('=');if(i>0)out[part.slice(0,i).trim()]=decodeURIComponent(part.slice(i+1).trim())}return out}
 export async function ensureAdminSchema(context){
