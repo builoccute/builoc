@@ -31,7 +31,7 @@ function AdminShell({user,onLogout}:{user:any,onLogout:()=>void}){const cms=useC
  const go=(id:Tab)=>{setTab(id);setPalette(false)};const say=(s:string)=>{setToast(s);setTimeout(()=>setToast(''),2500)};
  const logout=async()=>{await api('/api/admin-auth/logout',{method:'POST'}).catch(()=>{});onLogout()};
  return <div className={`admin ${collapsed?'is-collapsed':''}`}>
-  <aside className="admin-sidebar"><div className="admin-brand"><div className="brand-mark">BL</div>{!collapsed&&<div><b>Bui Loc</b><span>CMS</span></div>}<button className="icon-btn side-collapse" onClick={()=>setCollapsed(v=>!v)}>{collapsed?<PanelLeftOpen size={17}/>:<PanelLeftClose size={17}/>}</button></div>
+  <aside className="admin-sidebar"><div className="admin-brand"><img className="admin-brand-logo" src="/builoc-logo.png" alt="BUILOC"/>{!collapsed&&<div><b>BUILOC</b><span>CMS</span></div>}<button className="icon-btn side-collapse" onClick={()=>setCollapsed(v=>!v)}>{collapsed?<PanelLeftOpen size={17}/>:<PanelLeftClose size={17}/>}</button></div>
    <nav className="admin-nav">{nav.map((n,i)=>{const I=n.icon;const showGroup=n.group&&(!i||nav[i-1].group!==n.group);return <React.Fragment key={n.id}>{showGroup&&!collapsed&&<div className="nav-group">{n.group}</div>}<button className={tab===n.id?'active':''} onClick={()=>go(n.id)} title={n.label}><I size={18}/>{!collapsed&&<span>{n.label}</span>}</button></React.Fragment>})}</nav>
    <div className="sidebar-foot"><a href="/" target="_blank"><ExternalLink size={16}/>{!collapsed&&'Xem website'}</a><button onClick={logout}><LogOut size={16}/>{!collapsed&&'Đăng xuất'}</button></div>
   </aside>
