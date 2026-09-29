@@ -8,7 +8,7 @@ export function randomToken(bytes=32){const a=new Uint8Array(bytes);crypto.getRa
 export function parseCookies(req){const out={};for(const part of (req.headers.get('cookie')||'').split(';')){const i=part.indexOf('=');if(i>0)out[part.slice(0,i).trim()]=decodeURIComponent(part.slice(i+1).trim())}return out}
 export async function ensureAdminSchema(context){
  const db=context.env.DB;if(!db)throw new Error('D1 binding DB is missing');
- await db.prepare(`CREATE TABLE IF NOT EXISTS website_admin_users(id TEXT PRIMARY KEY,email TEXT NOT NULL UNIQUE,name TEXT NOT NULL,role TEXT NOT NULL DEFAULT 'editor',status TEXT NOT NULL DEFAULT 'active',password_salt TEXT NOT NULL,password_hash TEXT NOT NULL,password_iterations INTEGER NOT NULL DEFAULT 180000,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,last_login TEXT,must_change_password INTEGER NOT NULL DEFAULT 0,password_changed_at TEXT)`).run();
+ await db.prepare(`CREATE TABLE IF NOT EXISTS website_admin_users(id TEXT PRIMARY KEY,email TEXT NOT NULL UNIQUE,name TEXT NOT NULL,role TEXT NOT NULL DEFAULT 'editor',status TEXT NOT NULL DEFAULT 'active',password_salt TEXT NOT NULL,password_hash TEXT NOT NULL,password_iterations INTEGER NOT NULL DEFAULT 100000,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,last_login TEXT,must_change_password INTEGER NOT NULL DEFAULT 0,password_changed_at TEXT)`).run();
  await db.prepare(`CREATE TABLE IF NOT EXISTS website_admin_sessions(token_hash TEXT PRIMARY KEY,user_id TEXT NOT NULL,expires_at TEXT NOT NULL,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)`).run();
  await db.prepare(`CREATE TABLE IF NOT EXISTS website_admin_audit(id INTEGER PRIMARY KEY AUTOINCREMENT,actor_id TEXT,target_id TEXT,action TEXT NOT NULL,detail TEXT,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)`).run();
  const cols=await db.prepare(`PRAGMA table_info(website_admin_users)`).all();const names=new Set((cols.results||[]).map(x=>x.name));
@@ -28,7 +28,7 @@ export async function provisionOwner(context){
    // password_changed_at is still NULL. Once the Owner chooses a private password,
    // this branch can never overwrite it again.
    if(password.length>=10 && !existing.password_changed_at){
-     const salt=randomToken(18),iterations=180000,hash=await hashPassword(password,salt,iterations);
+     const salt=randomToken(18),iterations=100000,hash=await hashPassword(password,salt,iterations);
      await context.env.DB.prepare(`UPDATE website_admin_users SET name=?,role='owner',status='active',password_salt=?,password_hash=?,password_iterations=?,must_change_password=1 WHERE id=?`).bind(name,salt,hash,iterations,existing.id).run();
      return {created:false,recovered:true,ready:true,email};
    }
@@ -37,7 +37,7 @@ export async function provisionOwner(context){
  const count=await context.env.DB.prepare('SELECT COUNT(*) n FROM website_admin_users').first();
  if(Number(count?.n||0)>0)return {created:false,ready:false,code:'OWNER_EMAIL_MISMATCH'};
  if(password.length<10)return {created:false,ready:false,code:'OWNER_NOT_PROVISIONED'};
- const id=crypto.randomUUID(),salt=randomToken(18),iterations=180000,hash=await hashPassword(password,salt,iterations);
+ const id=crypto.randomUUID(),salt=randomToken(18),iterations=100000,hash=await hashPassword(password,salt,iterations);
  await context.env.DB.prepare(`INSERT INTO website_admin_users(id,email,name,role,status,password_salt,password_hash,password_iterations,must_change_password) VALUES(?,?,?,'owner','active',?,?,?,1)`).bind(id,email,name,salt,hash,iterations).run();
  await context.env.DB.prepare('INSERT INTO website_admin_audit(actor_id,target_id,action,detail) VALUES(?,?,?,?)').bind(id,id,'owner_provision','Owner được cấp phát từ Cloudflare Secret').run();
  return {created:true,ready:true,email};
