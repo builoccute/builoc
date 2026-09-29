@@ -4,5 +4,15 @@
   "phase": "2",
   "dataPolicy": "cloud-authoritative",
   "cachePolicy": "html-no-cache-assets-immutable",
-  "browserBaseline": ["Chrome", "Edge", "Firefox", "Safari", "Android WebView", "iOS Safari"]
+  "browserBaseline": [
+    "Chrome",
+    "Edge",
+    "Firefox",
+    "Safari",
+    "Android WebView",
+    "iOS Safari"
+  ],
+  "version": "2.1.0",
+  "channel": "workers",
+  "notes": "Accounts/API + redesigned admin authentication and CMS UI"
 }
