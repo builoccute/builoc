@@ -1,4 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Bui Loc">
- <path d="M30 22h55c27 0 45 13 45 34 0 14-8 25-22 31l27 39h-30L82 92H59v34H30V22zm29 25v22h25c10 0 17-4 17-11s-7-11-17-11H59z" fill="currentColor"/>
- <path d="M30 79h29v47h48l18 26H30V79z" fill="currentColor"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 120" role="img" aria-labelledby="title desc">
+<title id="title">Bui Loc</title><desc id="desc">Logo chính thức Bui Loc</desc>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1268F3"/><stop offset="1" stop-color="#00A6FF"/></linearGradient></defs>
+<rect x="4" y="4" width="112" height="112" rx="32" fill="url(#g)"/>
+<path d="M33 30h39c20 0 32 9 32 24 0 10-5 17-15 22l17 25H84L69 79H55v22H33V30zm22 18v15h17c7 0 11-3 11-8s-4-7-11-7H55z" fill="#fff"/>
+<path d="M33 70h22v31h32l14 0H33V70z" fill="#fff" opacity=".96"/>
+<text x="140" y="73" font-family="Inter,Arial,sans-serif" font-size="46" font-weight="800" letter-spacing="-2" fill="#0B1220">Bui Loc</text>
+<text x="142" y="96" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="2.4" fill="#64748B">PERSONAL WEBSITE</text>
 </svg>
