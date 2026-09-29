@@ -23,7 +23,7 @@ export async function provisionOwner(context){
  if(!/^\S+@\S+\.\S+$/.test(email))return {created:false,ready:false,code:'OWNER_EMAIL_INVALID'};
  const existing=await context.env.DB.prepare('SELECT * FROM website_admin_users WHERE lower(email)=? LIMIT 1').bind(email).first();
  if(existing){
-   // Recovery/migration path: older BUILOC builds may already have created the Owner
+   // Recovery/migration path: older Bui Loc CMS builds may already have created the Owner
    // with an unknown password. The temporary Cloudflare Secret is applied only while
    // password_changed_at is still NULL. Once the Owner chooses a private password,
    // this branch can never overwrite it again.
