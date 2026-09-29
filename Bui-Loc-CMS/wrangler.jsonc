@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bui-loc",
+  "compatibility_date": "2026-09-29",
+  "pages_build_output_dir": "./dist",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "builoc",
+      "database_id": "d562635e-156d-4850-9eed-c88942633193"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "canhan"
+    }
+  ]
+}
