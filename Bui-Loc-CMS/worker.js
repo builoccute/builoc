@@ -14,6 +14,8 @@ import * as mediaIndex from './functions/api/media/index.js';
 import * as mediaUpload from './functions/api/media/upload.js';
 import * as revisions from './functions/api/revisions/index.js';
 import * as health from './functions/api/system/health.js';
+import * as reportError from './functions/api/system/report-error.js';
+import {sendSystemAlert,alertPayload} from './functions/_alert.js';
 import * as mediaFile from './functions/media/[[path]].js';
 
 const routes = new Map([
@@ -33,6 +35,7 @@ const routes = new Map([
   ['/api/media/upload', mediaUpload],
   ['/api/revisions', revisions],
   ['/api/system/health', health],
+  ['/api/system/report-error', reportError],
 ]);
 
 function makeContext(request, env, executionCtx, params = {}) {
@@ -63,6 +66,8 @@ export default {
       return secure(await env.ASSETS.fetch(request));
     } catch (error) {
       console.error('Worker request failed', error);
+      const payload=alertPayload({level:'error',title:'Worker request failed',message:String(error?.message||error),source:'Cloudflare Worker',url:request.url,stack:error?.stack||''});
+      executionCtx.waitUntil(sendSystemAlert(env,payload).catch(e=>console.error('alert email failed',e)));
       if (path.startsWith('/api/')) return Response.json({ ok: false, error: 'Internal server error', detail: String(error?.message || error) }, { status: 500 });
       return new Response('Internal server error', { status: 500 });
     }

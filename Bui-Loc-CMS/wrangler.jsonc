@@ -27,6 +27,8 @@
   ],
   "vars": {
     "OWNER_NAME": "Bùi Tấn Lộc",
-    "OWNER_EMAIL": "builoc.contact@gmail.com"
+    "OWNER_EMAIL": "builoc.contact@gmail.com",
+    "ALERT_EMAIL": "builoc.contact@gmail.com",
+    "ALERT_FROM_EMAIL": "Bui Loc CMS <onboarding@resend.dev>"
   }
 }

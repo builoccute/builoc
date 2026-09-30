@@ -11,7 +11,7 @@ export const DEFAULT_SITE: SiteConfig = {
   contactTitle: 'Kết nối với Bui Loc', contactText: 'Nếu bạn muốn trao đổi về giáo dục, hoạt động cộng đồng, truyền thông, website hoặc một ý tưởng cần được cấu trúc rõ ràng hơn, hãy gửi lời nhắn qua biểu mẫu bên dưới.', siteStatus:'active'
 };
 
-export const DEFAULT_THEME: ThemeConfig = {primary:'#1268F3',accent:'#00A6FF',background:'#F7F9FC',surface:'#FFFFFF',text:'#0B1220',mutedText:'#64748B',border:'#E2E8F0',darkBackground:'#07111F',darkSurface:'#0E1B2D',darkText:'#F8FAFC',fontHeading:'Inter, ui-sans-serif, system-ui, sans-serif',fontBody:'Inter, ui-sans-serif, system-ui, sans-serif',radius:22,containerWidth:1180,cardShadow:'soft',motion:'normal'};
+export const DEFAULT_THEME: ThemeConfig = {primary:'#4DA3FF',accent:'#67E8F9',background:'#050B14',surface:'#0C1726',text:'#F5F9FF',mutedText:'#91A6BE',border:'#1D3147',darkBackground:'#030811',darkSurface:'#091422',darkText:'#F8FBFF',fontHeading:'Inter, ui-sans-serif, system-ui, sans-serif',fontBody:'Inter, ui-sans-serif, system-ui, sans-serif',radius:24,containerWidth:1180,cardShadow:'medium',motion:'expressive'};
 
 export const DEFAULT_NAV: NavigationItem[] = [
  {id:'home',label:'Trang chủ',url:'/',visible:true},{id:'about',label:'Giới thiệu',url:'/gioi-thieu',visible:true},{id:'projects',label:'Dự án',url:'/du-an',visible:true},{id:'activities',label:'Hoạt động',url:'/hoat-dong',visible:true},{id:'journey',label:'Hành trình',url:'/hanh-trinh',visible:true},{id:'posts',label:'Bài viết',url:'/bai-viet',visible:true},{id:'services',label:'Dịch vụ',url:'/dich-vu',visible:true},{id:'contact',label:'Liên hệ',url:'/lien-he',visible:true}
