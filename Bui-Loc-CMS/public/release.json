@@ -1,6 +1,13 @@
 {
   "product": "Bui Loc CMS",
   "channel": "production",
-  "updated": "2026-09-29",
-  "notes": ["Workers + D1 + R2", "Forced first-login password change", "API v1 aliases", "Editable personal services demo"]
+  "updated": "2026-09-30",
+  "notes": [
+    "Cinematic Digital Portrait public experience",
+    "Dedicated About and Services storytelling pages",
+    "Visual Archive with responsive masonry and lightbox",
+    "Appearance Studio V2 with theme and motion controls",
+    "Ctrl/Cmd + K quick navigation and ambient interaction system",
+    "Existing Workers, D1, R2, auth and email alert backend retained"
+  ]
 }

@@ -135,7 +135,17 @@ export interface ThemeConfig {
   containerWidth: number;
   cardShadow: 'none' | 'soft' | 'medium';
   motion: 'reduced' | 'normal' | 'expressive';
+  visualMode?: 'cinematic' | 'editorial' | 'glass' | 'minimal';
+  heroStyle?: 'portrait' | 'orbital' | 'editorial' | 'minimal';
+  glowIntensity?: number;
+  glassBlur?: number;
+  grain?: boolean;
+  grid?: boolean;
+  pointerAura?: boolean;
+  cardTilt?: boolean;
+  marquee?: boolean;
 }
+
 
 export interface SiteConfig {
   id?: string;

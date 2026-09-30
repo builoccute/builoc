@@ -3,6 +3,10 @@
 Website cá nhân + CMS quản trị cho `builoc.name.vn`.
 
 ## Release này
+- Digital Portrait UI: cinematic dark experience, motion, glow, glass, responsive and reduced-motion fallback.
+- Trang Giới thiệu dạng storytelling, Dịch vụ chuyên biệt và Thư viện hình ảnh cinematic tại `/thu-vien`.
+- Appearance Studio V2: 5 preset + visual mode, hero style, glow, glass, grain, grid, pointer aura, tilt và marquee.
+- Ctrl/Cmd + K quick navigation, scroll progress và back-to-top cho public site.
 - Public site nhiều URL thật, không phải một trang cuộn duy nhất.
 - Nhận diện Bui Loc với biểu tượng BL riêng, favicon SVG.
 - `dist/` đã biên dịch theo dạng browser-ready: không còn lỗi trắng do gọi trực tiếp TSX.
